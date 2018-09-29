@@ -3,8 +3,6 @@ package curator_test1.test10_master;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
-import org.apache.curator.framework.recipes.leader.LeaderLatch;
-import org.apache.curator.framework.recipes.leader.LeaderLatchListener;
 import org.apache.curator.framework.recipes.leader.LeaderSelector;
 import org.apache.curator.framework.recipes.leader.LeaderSelectorListener;
 import org.apache.curator.framework.state.ConnectionState;
@@ -27,13 +25,11 @@ public class ElectionTest {
             int count = 0;
             final String name = String.valueOf(random() + " client");
             LeaderSelector leaderSelector = new LeaderSelector(client, MASTER_PATH, new LeaderSelectorListener() {
-                @Override
                 public void takeLeadership(CuratorFramework curatorFramework) throws Exception {
                     System.out.println(name + "get leader");
                     Thread.sleep(2000);
                 }
 
-                @Override
                 public void stateChanged(CuratorFramework curatorFramework, ConnectionState connectionState) {
                     System.out.println(name + "changed state");
                     try {
